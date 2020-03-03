@@ -13,19 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 
 public class SensorIdentificarServlet extends HttpServlet {
-
+        
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
        doGet(req, resp);
    }
-     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-              FingerImageFinder finger=new FingerImageFinder();
-              
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{              
+         FingerImageFinder finger=new FingerImageFinder();         
          try {
              finger.downloadFingerImage();
          } catch (JSONException ex) {
              Logger.getLogger(SensorIdentificarServlet.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         
+         }       
       PrintWriter out = resp.getWriter();
       Sensor sensor=new Sensor();
       resp.setContentType("application/json");

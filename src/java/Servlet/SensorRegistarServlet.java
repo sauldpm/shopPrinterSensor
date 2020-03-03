@@ -4,20 +4,26 @@ import SensorTools.FingerImageFinder;
 import SensorTools.Sensor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONException;
 
 
 public class SensorRegistarServlet extends HttpServlet {
-
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
        doGet(req, resp);
    }
      
      protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
       FingerImageFinder finger=new FingerImageFinder();
-      finger.makeDirectory();
+      try {
+             finger.downloadFingerImage();
+         } catch (JSONException ex) {
+             Logger.getLogger(SensorIdentificarServlet.class.getName()).log(Level.SEVERE, null, ex);
+         }
       PrintWriter out = resp.getWriter();
       Sensor sensor=new Sensor();
       resp.setContentType("application/json");

@@ -30,7 +30,7 @@ public class Sensor {
     
     private byte[] template = new byte[2048];    
     private byte[] template2 = new byte[2048]; 
-    
+        
      public int buscar() throws IOException{
          int ret = FingerprintSensorErrorCode.ZKFP_ERR_OK;         
                 //Inicializar                
@@ -75,7 +75,7 @@ public class Sensor {
                 imgbuf = new byte[fpWidth*fpHeight];
                 //btnImg.resize(fpWidth, fpHeight);                 
                 int ren=-1;
-                int x=0;
+                int x=0;               
                 while(ren!=0){
                     System.out.println("leyendo");
                      templateLen[0] = 2048;
@@ -94,7 +94,7 @@ public class Sensor {
                 FingerImageFinder imageFinder=new FingerImageFinder();
                 imageFinder.findNamesInDirectory();
                 String [] names=imageFinder.getNamesDirectory();
-                
+                                
                 for(int i=0;i<names.length;i++){
                     System.out.println("Comparando");
                     templateLen2[0] = 2048;
@@ -105,10 +105,10 @@ public class Sensor {
                         FreeSensor();
                         return 0;
                     }   
-                }     
+                }                
                 FreeSensor();
                 return 3;
-     }
+     }     
     public int registrar() throws IOException{
          int ret = FingerprintSensorErrorCode.ZKFP_ERR_OK;
                 //Inicializar                
@@ -153,7 +153,7 @@ public class Sensor {
                 imgbuf = new byte[fpWidth*fpHeight];
                 //btnImg.resize(fpWidth, fpHeight);                 
                 int ren=-1;
-                int x=0;
+                int x=0;                
                 while(ren!=0){
                      templateLen[0] = 2048;
                      ren=FingerprintSensorEx.AcquireFingerprint(mhDevice, imgbuf, template, templateLen);                    
@@ -168,10 +168,27 @@ public class Sensor {
                           return 2;
                       }
                 } 
+                
+                FingerImageFinder imageFinder=new FingerImageFinder();
+                imageFinder.findNamesInDirectory();
+                String [] names=imageFinder.getNamesDirectory();
+                                
+                for(int i=0;i<names.length;i++){
+                    System.out.println("Comparando");
+                    templateLen2[0] = 2048;
+                    template2 = new byte[2048];
+                    FingerprintSensorEx.ExtractFromImage( mhDB, DIRECTORY+names[i], 500, template2, templateLen2);
+                    int percent=FingerprintSensorEx.DBMatch(mhDB ,template2, template);
+                    if(percent>=90){
+                        FreeSensor();
+                        return 10;//ya esta registrado
+                    }   
+                }   
+                
                 String nameFile=generarName();
-                writeBitmap(imgbuf, fpWidth, fpHeight,DIRECTORY+nameFile+".bmp");                              
-                sendServer(nameFile);
-                FreeSensor();   
+                writeBitmap(imgbuf, fpWidth, fpHeight,DIRECTORY+nameFile+".bmp");                 
+                sendServer(nameFile);                                
+                FreeSensor();                   
                 return 0;
     }
     
@@ -186,7 +203,8 @@ public class Sensor {
             String jsonInputString ="{\"data\":\""+toBase64(DIRECTORY+nameFile+".bmp")+"\",\"name\":\""+nameFile+"\"}";
             try(OutputStream os = con.getOutputStream()) {
                  byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);           
+                os.write(input, 0, input.length); 
+                os.close();
             }
             try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
                 StringBuilder response = new StringBuilder();
@@ -194,15 +212,19 @@ public class Sensor {
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
+                br.close();
                 System.out.println(response.toString());
             }
           con.disconnect();          
         } catch (MalformedURLException e) {
+            FreeSensor();
             System.err.println(e);  
         } catch (ProtocolException e){
+            FreeSensor();
             System.err.println(e);  
         }
         catch (IOException e){
+            FreeSensor();
             System.err.println(e);  
         }        
     }

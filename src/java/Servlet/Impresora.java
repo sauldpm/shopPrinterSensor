@@ -39,17 +39,15 @@ public class Impresora extends HttpServlet {
    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
        if(impresoraStatus!=null)
            impresoraStatus=null;       
-    // impresoraStatus=new ImpresoraStatus();
-    // impresoraStatus.status();    
+     impresoraStatus=new ImpresoraStatus();
+     impresoraStatus.status();    
      determinarStatus(req,resp);          
    }
    
     public void determinarStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         PrintWriter out = resp.getWriter();
-       // int statusCode=impresoraStatus.getStatusCode();
-       // int stateCode=impresoraStatus.getStateCode();
-        int statusCode=3;
-        int stateCode=0;
+        int statusCode=impresoraStatus.getStatusCode();
+        int stateCode=impresoraStatus.getStateCode();        
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");      
         resp.addHeader("Access-Control-Allow-Origin", "*");
