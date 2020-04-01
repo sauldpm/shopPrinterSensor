@@ -30,6 +30,10 @@ public class Sensor {
     
     private byte[] template = new byte[2048];    
     private byte[] template2 = new byte[2048]; 
+    
+     public Sensor() {
+       
+    }
         
      public int buscar() throws IOException{
          int ret = FingerprintSensorErrorCode.ZKFP_ERR_OK;         
@@ -93,8 +97,7 @@ public class Sensor {
                 } 
                 FingerImageFinder imageFinder=new FingerImageFinder();
                 imageFinder.findNamesInDirectory();
-                String [] names=imageFinder.getNamesDirectory();
-                                
+                String [] names=imageFinder.getNamesDirectory();               
                 for(int i=0;i<names.length;i++){
                     System.out.println("Comparando");
                     templateLen2[0] = 2048;

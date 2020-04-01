@@ -1,7 +1,5 @@
 package Servlet;
 
-
-
 import ImpresoraTools.ImpresoraStatus;
 import ImpresoraTools.Imprimir;
 import POJO.JSON.Ticket;
@@ -24,12 +22,9 @@ public class Impresora extends HttpServlet {
     private ImpresoraStatus impresoraStatus;
 
     @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
-        resp.addHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST");
-        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {                
         super.doOptions(req, resp);         
-        //doGet(req, resp);
+        doGet(req, resp);
     }
     
    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
@@ -45,6 +40,10 @@ public class Impresora extends HttpServlet {
    }
    
     public void determinarStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST");
+        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        
         PrintWriter out = resp.getWriter();
         int statusCode=impresoraStatus.getStatusCode();
         int stateCode=impresoraStatus.getStateCode();        

@@ -20,7 +20,9 @@ public class FingerImageFinder {
     private static final String URL_HUELLA="https://6iunrk1f11.execute-api.us-west-1.amazonaws.com/dev/huella";
     private static final String METHOD="GET";
     private static final String FORMAT=".bmp";
-     private static final String FORMAT_USE="bmp";
+    private static final String FORMAT_USE="bmp";
+     
+   
     
     String[] namesDirectory;
     ArrayList<FingerImage> imageBase=new ArrayList<FingerImage>();
@@ -28,7 +30,7 @@ public class FingerImageFinder {
     
      /*public static void main(String[] args) throws IOException, JSONException {
             new FingerImageFinder().downloadFingerImage();
-    }*/
+    }*/    
     
     public void downloadFingerImage() throws JSONException{                       
         makeDirectory();

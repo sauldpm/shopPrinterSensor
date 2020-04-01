@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/src/java/Servlet/Impresora.java</file>
+            <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/src/java/SensorTools/Windows.java</file>
             <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/src/java/Servlet/SensorRegistarServlet.java</file>
-            <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/src/java/Servlet/SensorIdentificarServlet.java</file>
             <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/src/java/SensorTools/Sensor.java</file>
-            <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/src/java/SensorTools/FingerImageFinder.java</file>
+            <file>file:/C:/Users/pc1/Documents/NetBeansProjects/ServerImpresora/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
